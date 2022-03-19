@@ -1,8 +1,13 @@
 package utils;
 
 public enum ReservedWord {
+    BASIC("(\\<\\?)(.*?)(\\?\\>)"),
+    NONE(""),
+    ENTER("\\\\n"),
+    FOR_START("(\\<\\?)[- ]?(for)(.*?)(in)(.*?)(\\?\\>)"),
+    FOR_END("(\\<\\?)[- ]?(endfor)[- ]?(\\?\\>)"),
+    VARIABLE("(\\<\\?)(\\=)(.*?)(\\?\\>)");
 
-    VARIABLE("(\\<\\?\\=)(.*?)(\\?\\>)"), ENTER("\\\\n");
 
     private final String pattern;
 

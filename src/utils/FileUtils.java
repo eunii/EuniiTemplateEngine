@@ -5,6 +5,8 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 
 public class FileUtils {
 
@@ -23,6 +25,18 @@ public class FileUtils {
             e.printStackTrace();
         }
         return str;
+    }
+
+    public List<String> readFileByLine(String fileDir) {
+        List<String> fileLines = new ArrayList<>();
+        try {
+            Path path = Paths.get(fileDir);
+            fileLines = Files.readAllLines(path);
+            return fileLines;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return fileLines;
     }
 
     public void writeFileBy(String string) {

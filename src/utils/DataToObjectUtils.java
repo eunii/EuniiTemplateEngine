@@ -7,14 +7,14 @@ import org.json.simple.parser.ParseException;
 
 import java.util.*;
 
-public class DataUtils {
+public class DataToObjectUtils {
 
-    Object inputData;
+    Object inputObject;
     Map<String, String> keyValueMap;
     JSONParser parser = new JSONParser();
 
-    public DataUtils(String stringData) {
-        this.inputData = stringToObject(stringData);
+    public DataToObjectUtils(String stringData) {
+        this.inputObject = stringToObject(stringData);
     }
 
     public Object stringToObject(String jasonString) {
@@ -24,6 +24,10 @@ public class DataUtils {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public DataObject getDataObject() {
+        return new DataObject(inputObject);
     }
 
     public Map<String, String> getVariableToValueMap(List<String> variables) {
@@ -86,9 +90,9 @@ public class DataUtils {
         return !jasonString.startsWith("{") && !jasonString.startsWith("[");
     }
 
-    private String getValueByVariable(String path) {
+    public String getValueByVariable(String path) {
         String[] paths = path.split("[.]");
-        Object childObject = inputData;
+        Object childObject = inputObject;
         for (int j = 1; j < paths.length; j++) {
             childObject = getChildObjectAfterCheckType(paths[j], childObject);
         }
