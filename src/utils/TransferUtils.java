@@ -33,6 +33,7 @@ public class TransferUtils {
         DataObject forDataObject = new DataObject();
 
         boolean isForStart = false;
+        //탬플릿 한줄한줄 읽기
         for (int i = 0; i < templateLines.size(); i++) {
             String line = templateLines.get(i);
             ReservedWord type = getLineType(line);
@@ -74,7 +75,7 @@ public class TransferUtils {
                         result.add(line);
                     }
                     if (type.equals(ReservedWord.VARIABLE)) {
-                        result.add(transferTemplateToResultWithTemplateAndData(line, dataObject.get(j)));
+                        result.add(transferTemplateToResultWithTemplateAndData(line, new DataObject(dataObject.getList().get(j))));
                     }
                     if (type.equals(ReservedWord.FOR_START)) {
                         isForStart = true;
@@ -135,5 +136,10 @@ public class TransferUtils {
             }
         }
         return ReservedWord.NONE;
+    }
+
+    public void writeFile(List<String> result) {
+
+        FileUtils.writeFileBy2(result);
     }
 }

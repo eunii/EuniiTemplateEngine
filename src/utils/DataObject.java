@@ -6,15 +6,10 @@ public class DataObject {
 
     private Object object;
 
-    public DataObject() {
-    }
+    public DataObject() {}
 
     public DataObject(Object object) {
         this.object = object;
-    }
-
-    public Object getObject() {
-        return object;
     }
 
     public int size() {
@@ -50,19 +45,19 @@ public class DataObject {
         return new DataObject();
     }
 
-    private List<Object> getList() {
-        return (List) this.object;
+    public List<Object> getList() {
+        return (List) object;
     }
 
     private Map<String, Object> getMap() {
-        return (Map) this.object;
+        return (Map) object;
     }
 
     public String getString() {
-        return (String) this.object;
+        return (String) object;
     }
 
-    public DataObject get(int i) {
+/*    public DataObject get(int i) {
         if (object instanceof String) {
             return new DataObject(object.toString());
         }
@@ -75,7 +70,7 @@ public class DataObject {
             return new DataObject(list.get(i));
         }
         return new DataObject();
-    }
+    }*/
 
     private boolean isList() {
         if (object instanceof List) {

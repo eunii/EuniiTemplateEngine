@@ -16,8 +16,6 @@ public class DataReader {
     public DataReader(String dataFilePath) {
         String data = fileUtils.readFileToString(dataFilePath);
         this.inputObject = stringToObject(data);
-        System.out.println("------------------------");
-        System.out.println(inputObject.toString());
     }
 
     public Object stringToObject(String jasonString) {
@@ -33,25 +31,16 @@ public class DataReader {
         return new DataObject(inputObject);
     }
 
-    public Map<String, String> getVariableToValueMap(List<String> variables) {
-        Map<String, String> map = new HashMap<>();
-        for (int i = 0; i < variables.size(); i++) {
-            String value = getValueByVariable(variables.get(i));
-            map.put(variables.get(i), value);
-        }
-        return map;
-    }
-
     private Object recursionParser(String jasonString) throws ParseException {
         if (isLastData(jasonString)) {
             return jasonString;
         }
-        Object obj = obj = parser.parse(jasonString.trim());
+        Object object = parser.parse(jasonString.trim());
         if (isMapObject(jasonString)) {
-            return getParentMap(obj);
+            return getParentMap(object);
         }
         if (isListObject(jasonString)) {
-            return getParentList(obj);
+            return getParentList(object);
         }
         return null;
     }
@@ -89,29 +78,5 @@ public class DataReader {
 
     private boolean isLastData(String jasonString) {
         return !jasonString.startsWith("{") && !jasonString.startsWith("[");
-    }
-
-    public String getValueByVariable(String path) {
-        String[] paths = path.split("[.]");
-        Object childObject = inputObject;
-        for (int j = 1; j < paths.length; j++) {
-            childObject = getChildObjectAfterCheckType(paths[j], childObject);
-        }
-        return childObject.toString();
-    }
-
-    public Object getChildObjectAfterCheckType(String path, Object childData) {
-        if (childData instanceof String) {
-            return childData.toString();
-        }
-        if (childData instanceof Map) {
-            Map map = (HashMap) childData;
-            return map.get(path);
-        }
-        if (childData instanceof List) {
-            List list = (ArrayList) childData;
-            return list.get(Integer.parseInt(path));
-        }
-        return null;
     }
 }

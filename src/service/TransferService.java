@@ -21,11 +21,10 @@ public class TransferService {
     }
 
     public void transfer2() {
-        //탬플릿에서 변수들 리스트 찾아온다
-        List<String> strings = transferUtils.transfer();
-        System.out.println("---------------------");
-        for (int i = 0; i < strings.size(); i++) {
-            System.out.println(strings.get(i));
+        List<String> result = transferUtils.transfer();
+        transferUtils.writeFile(result);
+        for (int i = 0; i < result.size(); i++) {
+            System.out.println(result.get(i));
         }
     }
 
