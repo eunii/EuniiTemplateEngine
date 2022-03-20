@@ -4,12 +4,17 @@ import java.util.*;
 
 public class DataObject {
 
-    Object object;
+    private Object object;
 
-    public DataObject() {    }
+    public DataObject() {
+    }
 
     public DataObject(Object object) {
         this.object = object;
+    }
+
+    public Object getObject() {
+        return object;
     }
 
     public int size() {
@@ -24,47 +29,37 @@ public class DataObject {
         return 1;
     }
 
-    /*public Map<String, String> getVariableToValueMap(List<String> variables) {
-
-        Map<String, String> map = new HashMap<>();
-        for (int i = 0; i < variables.size(); i++) {
-            String value = getValueByVariable(variables.get(i));
-            map.put(variables.get(i), value);
-        }
-        keyValueMap = map;
-        return map;
-    }*/
-
-    public String getValueByVariableByPaths(String path) {
-        String[] paths = path.split("[.]");
-        Object childObject = object;
-        for (int j = 1; j < paths.length; j++) {
-            childObject = getChildObject(paths[j], childObject);
-        }
-        return childObject.toString();
-    }
     public DataObject getDataObjectByVariable(List<String> variables) {
-//        String[] paths = variables.split("[.]");
-        Object childObject = object;
+        DataObject childDataObject = this;
         for (int i = 1; i < variables.size(); i++) {
-            childObject = getChildObject(variables.get(i), childObject);
+            childDataObject = childDataObject.getChildObject(variables.get(i));
         }
-        return new DataObject(childObject);
+        return childDataObject;
     }
 
-    public Object getChildObject(String path, Object childData) {
-        if (childData instanceof String) {
-            return childData.toString();
+    private DataObject getChildObject(String path) {
+        if (isString()) {
+            return new DataObject(this.getString());
         }
-        if (childData instanceof Map) {
-            Map map = (HashMap) childData;
-            return map.get(path);
+        if (isMap()) {
+            return new DataObject(this.getMap().get(path));
         }
-        if (childData instanceof List) {
-            List list = (ArrayList) childData;
-            return list.get(Integer.parseInt(path));
+        if (isList()) {
+            return new DataObject(this.getList().get(Integer.parseInt(path)));
         }
-        return childData;
+        return new DataObject();
+    }
+
+    private List<Object> getList() {
+        return (List) this.object;
+    }
+
+    private Map<String, Object> getMap() {
+        return (Map) this.object;
+    }
+
+    public String getString() {
+        return (String) this.object;
     }
 
     public DataObject get(int i) {
@@ -82,19 +77,21 @@ public class DataObject {
         return new DataObject();
     }
 
-    public boolean isList(){
+    private boolean isList() {
         if (object instanceof List) {
             return true;
         }
         return false;
     }
-    public boolean isMap(){
+
+    private boolean isMap() {
         if (object instanceof Map) {
             return true;
         }
         return false;
     }
-    public boolean isString(){
+
+    private boolean isString() {
         if (object instanceof String) {
             return true;
         }

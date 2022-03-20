@@ -7,14 +7,17 @@ import org.json.simple.parser.ParseException;
 
 import java.util.*;
 
-public class DataToObjectUtils {
+public class DataReader {
 
     Object inputObject;
-    Map<String, String> keyValueMap;
     JSONParser parser = new JSONParser();
+    FileUtils fileUtils = new FileUtils();
 
-    public DataToObjectUtils(String stringData) {
-        this.inputObject = stringToObject(stringData);
+    public DataReader(String dataFilePath) {
+        String data = fileUtils.readFileToString(dataFilePath);
+        this.inputObject = stringToObject(data);
+        System.out.println("------------------------");
+        System.out.println(inputObject.toString());
     }
 
     public Object stringToObject(String jasonString) {
@@ -31,13 +34,11 @@ public class DataToObjectUtils {
     }
 
     public Map<String, String> getVariableToValueMap(List<String> variables) {
-
         Map<String, String> map = new HashMap<>();
         for (int i = 0; i < variables.size(); i++) {
             String value = getValueByVariable(variables.get(i));
             map.put(variables.get(i), value);
         }
-        keyValueMap = map;
         return map;
     }
 
@@ -45,7 +46,7 @@ public class DataToObjectUtils {
         if (isLastData(jasonString)) {
             return jasonString;
         }
-        Object obj =obj = parser.parse(jasonString.trim());
+        Object obj = obj = parser.parse(jasonString.trim());
         if (isMapObject(jasonString)) {
             return getParentMap(obj);
         }
