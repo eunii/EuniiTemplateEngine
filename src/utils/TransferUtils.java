@@ -64,7 +64,6 @@ public class TransferUtils {
         List<String> result = new ArrayList<>();
         List<String> forTemplate = new ArrayList<>();
         DataObject forDataObject = dataObject;
-
         for (int j = 0; j < dataObject.size(); j++) {
             boolean isForStart = false;
             for (int i = 0; i < lines.size(); i++) {
@@ -111,10 +110,11 @@ public class TransferUtils {
         Matcher matcher = variablePattern.matcher(line);
         while (matcher.find()) {
             String variable = matcher.group(3);
-            variable = variable.replaceAll(" ", "");
             List<String> variables = Arrays.asList(variable.split("\\."));
+            System.out.println(variable);
             DataObject value = dataObject.getDataObjectByVariable(variables);
-            line = line.replace(matcher.group(), value.getString());
+            line = line.replace(matcher.group(), String.valueOf(value.getObject()));
+            System.out.println("-----------");
         }
         return line;
     }
