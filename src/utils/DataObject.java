@@ -33,13 +33,7 @@ public class DataObject {
         for (int i = 1; i < variables.size(); i++) {
             if (variables.get(i).equals("*")) {
                 List<Object> list = new ArrayList<>();
-                System.out.println("------------"+size());
-                List<String> bb = variables.subList(1, variables.size());
-
                 for (int j = 0; j < childDataObject.size(); j++) {
-                    DataObject ddfs = childDataObject.getChildObject(j + "", childDataObject);
-                    DataObject AAA = ddfs.getDataObjectByVariable(bb);
-                    System.out.println("-----------");
                     list.add(childDataObject.getChildObject(j + "", childDataObject).getDataObjectByVariable(variables.subList(1, variables.size())).getObject());
                 }
                 return new DataObject(list);
@@ -50,11 +44,9 @@ public class DataObject {
         return childDataObject;
     }
 
-    private Object getObejct() {
-        return this.object;
-    }
 
     private DataObject getChildObject(String path, DataObject dataObject) {
+        System.out.println(dataObject.toString());
         if (isString()) {
             return new DataObject(dataObject.getString());
         }
@@ -62,7 +54,9 @@ public class DataObject {
             return new DataObject(dataObject.getMap().get(path));
         }
         if (isList()) {
-            return new DataObject(dataObject.getList().get(Integer.parseInt(path)));
+            if(!dataObject.getList().isEmpty()){
+                return new DataObject(dataObject.getList().get(Integer.parseInt(path)));
+            }
         }
         return new DataObject();
     }

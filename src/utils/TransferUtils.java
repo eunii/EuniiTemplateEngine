@@ -110,11 +110,10 @@ public class TransferUtils {
         Matcher matcher = variablePattern.matcher(line);
         while (matcher.find()) {
             String variable = matcher.group(3);
+            variable = variable.replaceAll(" ", "");
             List<String> variables = Arrays.asList(variable.split("\\."));
-            System.out.println(variable);
             DataObject value = dataObject.getDataObjectByVariable(variables);
             line = line.replace(matcher.group(), String.valueOf(value.getObject()));
-            System.out.println("-----------");
         }
         return line;
     }
