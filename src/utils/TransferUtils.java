@@ -85,7 +85,7 @@ public class TransferUtils {
         Matcher matcher = basicPattern.matcher(templateLine);
         while (matcher.find()) {
             String reservedWord = matcher.group();
-            reservedWord = reservedWord.replaceAll(" ", "");
+            reservedWord = reservedWord.replaceAll(ReservedWord.SPACE.getPattern(), ReservedWord.SPACE_REPLACE.getPattern());
             if (reservedWord.matches(ReservedWord.VARIABLE.getPattern())) {
                 return ReservedWord.VARIABLE;
             }

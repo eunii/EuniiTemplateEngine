@@ -18,10 +18,9 @@ public class TransferService {
             TransferUtils transferUtils = new TransferUtils(dataObject, templateList);
             List<String> result = transferUtils.transfer();
             FileUtils.writeFileBy(result);
-
             System.out.println("현재 경로에 결과 파일(out.txt)을 저장했습니다.");
         } catch (ParseException e) {
-            System.out.println("jason 형태의 파일이 아닙니다.");
+            System.out.println("데이터 파일이 jason 형태의 파일이 아닙니다.");
         }
     }
 

@@ -9,7 +9,6 @@ import java.util.*;
 
 public class DataParser {
 
-    Object inputObject;
     JSONParser parser = new JSONParser();
     FileUtils fileUtils = new FileUtils();
 
