@@ -1,0 +1,27 @@
+{
+
+       "info":{
+
+          "name":{
+
+              "family":"Doe",
+
+              "given":"John",
+
+              "middle":"Siva"
+
+          },
+
+          "addrs":[]
+
+       },
+
+       "membership":{
+
+           "grade": "SILVER",
+
+           "id": "67890"
+
+       }
+
+   }

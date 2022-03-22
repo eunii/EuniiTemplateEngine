@@ -1,0 +1,5 @@
+Admin\n
+<? for ID in USERS.*.info.name ?>
+Membership Id : <?= ID.family ?>\n
+<? endfor ?>
+\n

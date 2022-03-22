@@ -1,0 +1,3 @@
+Admin\n
+<? USER.0.info.id ?>
+\n

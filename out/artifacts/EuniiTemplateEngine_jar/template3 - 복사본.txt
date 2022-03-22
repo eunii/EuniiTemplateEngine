@@ -1,0 +1,6 @@
+Admin\n
+<? for ID in USERS.*.info.addrs ?>
+Membership Id : <?= ID.addr1 ?>\n
+<?= ID.addr2 ?>\n
+<? endfor ?>
+\n

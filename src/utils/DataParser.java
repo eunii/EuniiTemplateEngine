@@ -7,35 +7,23 @@ import org.json.simple.parser.ParseException;
 
 import java.util.*;
 
-public class DataReader {
+public class DataParser {
 
     Object inputObject;
     JSONParser parser = new JSONParser();
     FileUtils fileUtils = new FileUtils();
 
-    public DataReader(String dataFilePath) {
-        String data = fileUtils.readFileToString(dataFilePath);
-        this.inputObject = stringToObject(data);
-    }
-
-    public Object stringToObject(String jasonString) {
-        try {
-            return recursionParser(jasonString);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    public DataObject getDataObject() {
+    public DataObject getDataObject(String jasonString) throws ParseException {
+        Object inputObject = recursionParser(jasonString);
         return new DataObject(inputObject);
     }
 
     private Object recursionParser(String jasonString) throws ParseException {
+        jasonString = jasonString.trim();
         if (isLastData(jasonString)) {
             return jasonString;
         }
-        Object object = parser.parse(jasonString.trim());
+        Object object = parser.parse(jasonString);
         if (isMapObject(jasonString)) {
             return getParentMap(object);
         }
@@ -47,12 +35,12 @@ public class DataReader {
 
     private List<Object> getParentList(Object obj) throws ParseException {
         JSONArray jsonArray = (JSONArray) obj;
-        ArrayList list = new ArrayList();
+        ArrayList parsingDataList = new ArrayList();
         for (int i = 0; i < jsonArray.size(); i++) {
             Object childObject = recursionParser(jsonArray.get(i).toString());
-            list.add(childObject);
+            parsingDataList.add(childObject);
         }
-        return list;
+        return parsingDataList;
     }
 
     private Map<String, Object> getParentMap(Object obj) throws ParseException {

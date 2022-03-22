@@ -1,0 +1,10 @@
+Family name: Doe
+Given name: John
+Address : ? ?
+MemberShip : SILVER 67890
+
+Admin
+Membership Id : 12345
+Membership Id : 67890
+Membership Id : 99999
+
